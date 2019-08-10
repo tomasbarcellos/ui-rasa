@@ -27,9 +27,6 @@ class PartesHistoria(models.Model):
     ordem = models.PositiveSmallIntegerField("ordem do elemento na história")
     componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
 
-    def __str__(self):
-        return self.nome
-
 class Texto(models.Model):
     id_acao_intencao = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
     texto = models.CharField(max_length=500)
