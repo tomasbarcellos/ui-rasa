@@ -4,15 +4,6 @@ from django.db import models
 # intenções > textos
 # ações > textos
 
-class Historia(models.Model):
-    nome = models.CharField(max_length=200)
-    ordem = models.PositiveSmallIntegerField("ordem do elemento na história")
-    componente = models.ForeignKey(AcaoIntencao)
-
-    def __str__(self):
-        return self.nome
-
-
 class AcaoIntencao(models.Model):
     TIPO_CHOICE = (
         ("Ação", "Ação"),
@@ -25,9 +16,17 @@ class AcaoIntencao(models.Model):
     def __str__(self):
         return self.nome
 
+class Historia(models.Model):
+    nome = models.CharField(max_length=200)
+    ordem = models.PositiveSmallIntegerField("ordem do elemento na história")
+    componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
+
+    def __str__(self):
+        return self.nome
+
 
 class Texto(models.Model):
-    id_acao_intencao = models.ForeignKey(AcaoIntencao)
+    id_acao_intencao = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
     texto = models.CharField(max_length=500)
 
     def __str__(self):
