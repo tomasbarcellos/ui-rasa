@@ -1,7 +1,7 @@
 <div class="container ">
         <h2> Criar Intenção </h2> <br>
     
-        <form class="intencao-form" action="{% url 'intencao' %}" method="post">
+        <form class="intencao-form" action="{% url 'criar_intencao' %}" method="post">
             {% csrf_token %} {% for field in form %}
             <div class="form-group">
                 {{ field.errors }} {{ field.label_tag }} {{ field }}

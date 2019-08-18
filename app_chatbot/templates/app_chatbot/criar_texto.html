@@ -1,0 +1,13 @@
+<div class="container ">
+        <h2> Criar Texto </h2> <br>
+    
+        <form class="texto-form" action="{% url 'criar_texto' %}" method="post">
+            {% csrf_token %} {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }} {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" name="submit-acao" value="Criar texto" class="btn btn-success">
+            <a class="btn btn-danger" href="{% url 'criar_texto' %}">Cancelar</a>
+        </form> <br>
+    </div>

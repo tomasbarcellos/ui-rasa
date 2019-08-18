@@ -34,3 +34,20 @@ class AcaoIntencaoForm(forms.ModelForm):
             ),
         }
 
+class TextoForm(forms.ModelForm):
+
+    class Meta:
+        model = Texto
+        fields = ('id_acao_intencao', 'texto',)
+        labels = {
+            "id_acao_intencao": "Ação",
+            "texto": "Exemplo",
+        }   
+        widgets = {
+            "id_acao_intencao": forms.Select(
+                attrs={"class": "selectpicker form-control"}
+            ),
+            "texto": forms.TextInput(
+                attrs={"class": "form-control",},
+            ),
+        }
