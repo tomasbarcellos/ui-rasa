@@ -1,0 +1,13 @@
+<div class="container ">
+        <h2> Criar História </h2> <br>
+    
+        <form class="historia-form" action="{% url 'criar_historia' %}" method="post">
+            {% csrf_token %} {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }} {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" name="submit-intencao" value="Criar história" class="btn btn-success">
+            <a class="btn btn-danger" href="{% url 'historia' %}">Cancelar</a>
+        </form> <br>
+    </div>

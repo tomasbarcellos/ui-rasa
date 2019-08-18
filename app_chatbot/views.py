@@ -8,6 +8,18 @@ def historia(request):
     historias = Historia.objects.all()
     return render(request, 'app_chatbot/historia.html', {'historias': historias})
 
+def criar_historia(request):
+    if request.method == 'POST':
+        form = forms.HistoriaForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return redirect(reverse("criar_historia"))
+    else:
+        form = forms.HistoriaForm()
+    context = {"form": form, }
+    return render(request, 'app_chatbot/criar_historia.html', context)
+
 def criar_intencao(request):
     if request.method == 'POST':
         form = forms.AcaoIntencaoForm(request.POST)
