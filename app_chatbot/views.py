@@ -20,3 +20,14 @@ def criar_intencao(request):
     context = {"form": form, }
     return render(request, 'app_chatbot/criar_intencao.html', context)
 
+def criar_acao(request):
+    if request.method == 'POST':
+        form = forms.AcaoIntencaoForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return redirect(reverse("acao"))
+    else:
+        form = forms.AcaoIntencaoForm()
+    context = {"form": form, }
+    return render(request, 'app_chatbot/criar_acao.html', context)

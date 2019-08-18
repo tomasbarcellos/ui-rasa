@@ -1,0 +1,13 @@
+<div class="container ">
+        <h2> Criar Intenção </h2> <br>
+    
+        <form class="acao-form" action="{% url 'acao' %}" method="post">
+            {% csrf_token %} {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }} {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" name="submit-acao" value="Criar ação" class="btn btn-success">
+            <a class="btn btn-danger" href="{% url 'acao' %}">Cancelar</a>
+        </form> <br>
+    </div>
