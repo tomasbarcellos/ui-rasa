@@ -4,19 +4,22 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-
 <html>
 <body>
     <h1>Histórias cadastradas</h1>
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Nome da história</th>
+            <th>Parte</th>
+            <th>Tipo</th>
+            <th>Texto</th>
         </tr>
-        {% for hst in historias %}
+        {% for txt in textos %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ hst }}</td>
+            <td>{{ txt.id_acao_intencao }}</td>
+            <td>{{ txt.id_acao_intencao.tipo }}</td>
+            <td>{{ txt }}</td>
         </tr>
         {% endfor %}
     </table>
