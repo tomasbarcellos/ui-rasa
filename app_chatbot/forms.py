@@ -23,14 +23,14 @@ class AcaoIntencaoForm(forms.ModelForm):
         fields = ('nome', 'tipo',)
         labels = {
             "nome": "Nome:",
-            "tipo": "Ação ou Intenção?",
+            "tipo": "",
         }   
         widgets = {
             "nome": forms.TextInput(
                 attrs={"class": "form-control",},
             ),
             "tipo": forms.Select(
-                attrs={"class": "selectpicker form-control"}
+                attrs={"class": "selectpicker form-control", "style":"display:none"}
             ),
         }
 
@@ -40,12 +40,12 @@ class TextoForm(forms.ModelForm):
         model = Texto
         fields = ('id_acao_intencao', 'texto',)
         labels = {
-            "id_acao_intencao": "Ação",
+            "id_acao_intencao": "",
             "texto": "Exemplo",
         }   
         widgets = {
             "id_acao_intencao": forms.Select(
-                attrs={"class": "selectpicker form-control"}
+                attrs={"class": "selectpicker form-control", "style": "display:none"}
             ),
             "texto": forms.TextInput(
                 attrs={"class": "form-control",},

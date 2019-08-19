@@ -1,10 +1,8 @@
-from django.urls import path
+from django.urls import re_path, path
 from . import views
 
 urlpatterns = [
     path('', views.historia, name='historia'),
     path('historia', views.criar_historia, name='criar_historia'),
-    path('intencao', views.criar_intencao, name='criar_intencao'),
-    path('acao', views.criar_acao, name='criar_acao'),
-    path('texto', views.criar_texto, name='criar_texto'),
+    re_path(r'^criar/(?P<tipo>(acao|intencao))$', views.criar_acao_intencao, name='criar_teste'),
 ]

@@ -7,8 +7,8 @@ from django.forms.models import modelformset_factory
 from . import forms, models
 
 def historia(request):
-    historias = models.Historia.objects.all()
-    return render(request, 'app_chatbot/historia.html', {'historias': historias})
+    textos = models.Texto.objects.all()
+    return render(request, 'app_chatbot/historia.html', {'textos': textos})
 
 def criar_historia(request):
     if request.method == 'POST':
@@ -22,38 +22,32 @@ def criar_historia(request):
     context = {"form": form, }
     return render(request, 'app_chatbot/criar_historia.html', context)
 
-def criar_intencao(request):
-    if request.method == 'POST':
-        form = forms.AcaoIntencaoForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return redirect(reverse("criar_intencao"))
+def criar_acao_intencao(request, tipo):
+    N_EXTRA = 10
+    TextoFormset = modelformset_factory(
+        models.Texto, form=forms.TextoForm, extra=N_EXTRA, min_num=1,
+    )
+    if tipo == "acao":
+        tipo_txt = "Ação"
     else:
-        form = forms.AcaoIntencaoForm()
-    context = {"form": form, }
-    return render(request, 'app_chatbot/criar_intencao.html', context)
+        tipo_txt = "Intenção"
 
-def criar_acao(request):
-    if request.method == 'POST':
-        form = forms.AcaoIntencaoForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return redirect(reverse("criar_acao"))
-    else:
-        form = forms.AcaoIntencaoForm()
-    context = {"form": form, }
-    return render(request, 'app_chatbot/criar_acao.html', context)
+    queryset = models.Texto.objects.none()
+    formset = TextoFormset(request.POST or None, queryset=queryset)
+    form = forms.AcaoIntencaoForm(request.POST or None)
+    if form.is_valid() and formset.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        saved_id = instance.pk
+        instances = formset.save(commit=False)
+        for insta in instances:
+            insta.id_acao_intencao_id = saved_id
+            insta.save()
+        return redirect(reverse("criar_acao_intencao", kwargs={"tipo": tipo}))
+    context = {
+        "form": form,
+        "formset": formset,
+        "tipo": tipo_txt,
+    }
+    return render(request, 'app_chatbot/criar_acao_intencao.html', context)
 
-def criar_texto(request):
-    if request.method == 'POST':
-        form = forms.TextoForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return redirect(reverse("criar_texto"))
-    else:
-        form = forms.TextoForm()
-    context = {"form": form, }
-    return render(request, 'app_chatbot/criar_texto.html', context)

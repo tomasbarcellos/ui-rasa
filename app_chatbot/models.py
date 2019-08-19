@@ -10,8 +10,7 @@ class AcaoIntencao(models.Model):
         ("Intenção", "Intenção"),
     )
     nome = models.CharField(max_length=200)
-    tipo = models.CharField(max_length=30, choices=TIPO_CHOICE,)
-
+    tipo = models.CharField(max_length=30, choices=TIPO_CHOICE, default="Ação",)
 
     def __str__(self):
         return self.nome
@@ -28,7 +27,7 @@ class PartesHistoria(models.Model):
     componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
 
 class Texto(models.Model):
-    id_acao_intencao = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
+    id_acao_intencao = models.ForeignKey(AcaoIntencao, blank=True, on_delete = models.PROTECT)
     texto = models.CharField(max_length=500)
 
     def __str__(self):
