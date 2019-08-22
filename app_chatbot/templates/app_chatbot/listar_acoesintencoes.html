@@ -1,0 +1,12 @@
+
+
+{% for acao in pais %}
+<ul>
+    <li>{{acao}}</li>
+    <ol>
+        {% for txt in textos|in.acao %}
+        <li>{{txt}}</li>
+        {% endfor %}
+    </ol>
+</ul>
+{% endfor %}

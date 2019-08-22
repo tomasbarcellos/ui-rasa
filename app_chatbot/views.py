@@ -51,3 +51,21 @@ def criar_acao_intencao(request, tipo):
     }
     return render(request, 'app_chatbot/criar_acao_intencao.html', context)
 
+# 2. Criar view em que há uma lista de todas as intenções
+# deve listar os X primeiros (uma uma amostra de tamanho X) exemplos
+def listar_acoesintencoes(request, tipo):
+    # ta errado mas a logica é essa
+    if tipo == "acao":
+        tipo_txt = "Ação"
+    else:
+        tipo_txt = "Intenção"
+
+    acao_intencao = models.AcaoIntencao.objects.filter(tipo=tipo_txt)
+    textos = models.Texto.objects.filter(query=acao_intencao)
+    
+    context = {
+        "pais": acao_intencao,
+        "textos": textos,
+    }
+    return render(request, 'app_chatbot/listar_acoesintencoes.html', context)
+
