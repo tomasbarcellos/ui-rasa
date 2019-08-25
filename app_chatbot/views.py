@@ -60,8 +60,8 @@ def listar_acoesintencoes(request, tipo):
     else:
         tipo_txt = "Intenção"
 
-    acao_intencao = models.AcaoIntencao.objects.filter(tipo=tipo_txt)
-    textos = models.Texto.objects.filter(query=acao_intencao)
+    acao_intencao = models.AcaoIntencao.objects.all().filter(tipo = tipo_txt)
+    textos = models.Texto.objects.all()
     
     context = {
         "pais": acao_intencao,

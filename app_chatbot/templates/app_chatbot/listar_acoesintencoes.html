@@ -1,12 +1,14 @@
 
-
+<ol>
 {% for acao in pais %}
-<ul>
+
     <li>{{acao}}</li>
-    <ol>
-        {% for txt in textos|in.acao %}
+    <ul>
+        {% for txt in textos %}
+            {% if txt.id_acao_intencao == acao %}
         <li>{{txt}}</li>
+            {% endif %}
         {% endfor %}
-    </ol>
-</ul>
+    </ul>
 {% endfor %}
+</ol>
