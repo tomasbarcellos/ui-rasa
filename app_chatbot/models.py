@@ -22,12 +22,15 @@ class Historia(models.Model):
         return self.nome
 
 class PartesHistoria(models.Model):
-    historia = models.ForeignKey(Historia, on_delete = models.PROTECT)
+    historia = models.ForeignKey(Historia, on_delete = models.CASCADE)
     ordem = models.PositiveSmallIntegerField("ordem do elemento na história")
     componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
 
+    def __str__(self):
+        return str(self.ordem) + ": " + str(self.componente)
+
 class Texto(models.Model):
-    id_acao_intencao = models.ForeignKey(AcaoIntencao, blank=True, on_delete = models.PROTECT)
+    id_acao_intencao = models.ForeignKey(AcaoIntencao, blank=True, on_delete = models.CASCADE)
     texto = models.CharField(max_length=500)
 
     def __str__(self):
