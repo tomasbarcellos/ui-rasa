@@ -3,10 +3,9 @@ from django.urls import reverse
 from django.forms.models import modelformset_factory
 
 
-# from .models import Historia
 from . import forms, models
 
-def historia(request):
+def listar_historia(request):
     textos = models.Texto.objects.all()
     return render(request, 'app_chatbot/historia.html', {'textos': textos})
 
