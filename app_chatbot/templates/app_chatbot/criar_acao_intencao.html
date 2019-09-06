@@ -23,10 +23,8 @@
             {% endfor %}
             {{ formset.management_form }} 
             {% for form in formset %} 
-                {% if forloop.counter > 1 %}
                 {% csrf_token %}
                 <div> {{form}} <br> </div>
-                {% endif %}
             {% endfor %}
 
             <div style="text-align: right; line-height:0">
@@ -45,9 +43,10 @@
         </div>
     </form>
 </div>
-
+ 
 <script>
     document.querySelector("#acao_intencao-form select option[value='{{tipo}}']").selected = "selected"
+    
     const querySelectorHas = (parent, child ) => []
       .filter.call(document.querySelectorAll(parent), 
                    (elem) => elem.querySelector(child))
@@ -72,4 +71,5 @@
             nodes[nodes.length - 1].hidden = true;
         }
     }
+    
 </script>
