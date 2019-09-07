@@ -24,15 +24,31 @@ def listar_historia(request):
     return render(request, 'app_chatbot/historia.html', {'textos': textos})
 
 def criar_historia(request):
-    if request.method == 'POST':
-        form = forms.HistoriaForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return redirect(reverse("criar_historia"))
-    else:
-        form = forms.HistoriaForm()
-    context = {"form": form, }
+    N = 2
+
+    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
+    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+    
+    form = forms.HistoriaForm(request.POST or None)
+    
+    # N_EXTRA = 10
+    # PartesFormset = modelformset_factory(
+    #     models.PartesHistoria, form=forms., extra=N_EXTRA, min_num=1,
+    # )
+    # queryset = models.Historia.objects.none()
+    # formset = PartesFormset(request.POST or None, queryset=queryset)
+    
+    context = {
+        'acoes': acoes[:N],
+        'intencoes': intencoes[:N],
+        'form':form
+    }
+    
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect(reverse("criar_historia", kwargs=context))
+
     return render(request, 'app_chatbot/criar_historia.html', context)
 
 def editar_historia(request, id):
@@ -51,6 +67,7 @@ def criar_acao_intencao(request, tipo):
     queryset = models.Texto.objects.none()
     formset = TextoFormset(request.POST or None, queryset=queryset)
     form = forms.AcaoIntencaoForm(request.POST or None)
+
     if form.is_valid() and formset.is_valid():
         instance = form.save(commit=False)
         instance.save()

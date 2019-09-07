@@ -1,6 +1,40 @@
+<style>
+    div {
+        border:black solid 1px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 250px 250px;
+        grid-template-areas: 
+            "main caixa1"
+            "main caixa2";
+    }
+
+    a {
+        margin-block-start: 1.33em;
+        margin-block-end: 1.33em;
+    }
+
+    .main {
+        grid-area: main;
+    }
+
+    .caixa1 {
+        grid-area: caixa1;
+    }
+
+    .caixa2 {
+        grid-area: caixa2;
+    }
+
+</style>
+
 <div class="container ">
+    <div class="main">
         <h2> Criar História </h2> <br>
-    
+
         <form class="historia-form" action="{% url 'criar_historia' %}" method="post">
             {% csrf_token %} {% for field in form %}
             <div class="form-group">
@@ -11,3 +45,24 @@
             <a class="btn btn-danger" href="{% url 'listar_historia' %}">Cancelar</a>
         </form> <br>
     </div>
+    <div class="caixa1">
+        {{ acoes }}
+        <ul>
+            {% for a in acoes %}
+            <li class="form-group">
+                {{ a }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="caixa2">
+        {{ intencoes }}
+        <ul>
+            {% for i in intencoes %}
+            <li class="form-group">
+                {{ i }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
