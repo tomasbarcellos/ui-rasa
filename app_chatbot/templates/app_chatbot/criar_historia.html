@@ -41,6 +41,12 @@
                 {{ field.errors }} {{ field.label_tag }} {{ field }}
             </div>
             {% endfor %}
+
+            {{ formset.management_form }} 
+            {% for form in formset %} 
+                {% csrf_token %}
+                <div> {{form}} <br> </div>
+            {% endfor %}
             <input type="submit" name="submit-intencao" value="Criar história" class="btn btn-success">
             <a class="btn btn-danger" href="{% url 'index' %}">Cancelar</a>
         </form> <br>

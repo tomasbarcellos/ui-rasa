@@ -25,29 +25,38 @@ def listar_historia(request):
 
 def criar_historia(request):
     N = 2
-
+    N_EXTRA = 10
+    
+    PartesFormset = modelformset_factory(
+        models.PartesHistoria, form=forms.PartesHistoriaForm, extra=N_EXTRA, min_num=1,
+    )
+    queryset = models.Historia.objects.none()
+    
     acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
     intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
     
     form = forms.HistoriaForm(request.POST or None)
-    
-    # N_EXTRA = 10
-    # PartesFormset = modelformset_factory(
-    #     models.PartesHistoria, form=forms., extra=N_EXTRA, min_num=1,
-    # )
-    # queryset = models.Historia.objects.none()
-    # formset = PartesFormset(request.POST or None, queryset=queryset)
+    formset = PartesFormset(request.POST or None, queryset=queryset)
     
     context = {
         'acoes': acoes[:N],
         'intencoes': intencoes[:N],
-        'form':form
+        'form': form,
+        'formset': formset,
     }
     
-    if form.is_valid():
+    if form.is_valid() and formset.is_valid():
         instance = form.save(commit=False)
         instance.save()
-        return redirect(reverse("criar_historia", kwargs=context))
+        id_hist = instance.pk
+        ordem = 1
+        instancias = formset.save(commit=False)
+        for insta in instancias:
+            insta.ordem = ordem
+            insta.historia_id = id_hist
+            insta.save()
+            ordem += 1
+        return redirect(reverse("index"))
 
     return render(request, 'app_chatbot/criar_historia.html', context)
 
