@@ -3,24 +3,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/15bb5284d3.js"></script>
 
 
 <div class="container criar-acao_intencao" style="font-size:small;">
     <h5>Criar {{tipo}}</h5>
     <hr>
     <form id="acao_intencao-form" class="acao_intencao-form" action="" method="post">
-        {% csrf_token %} {% for field in form %}
+        {% csrf_token %} 
+        {% for field in form %}
         <div class="form-group">
             {{ field.label_tag }} {{ field }} {{ field.errors }}
         </div>
         {% endfor %}<br>
         <div id="form-exemplo">
-            {{ formset.non_form_errors }}
-            {% for dict in formset.errors %}
-            {{ forloop.counter }}
-                {{ dict }}
-            {% endfor %}
             {{ formset.management_form }} 
             {% for form in formset %} 
                 {% csrf_token %}
