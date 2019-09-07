@@ -6,7 +6,18 @@ from django.forms.models import modelformset_factory
 from . import forms, models
 
 def index(request):
-    return render(request, "app_chatbot/index.html", {})
+    N = 2
+
+    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
+    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+    historias = models.Historia.objects.all()
+
+    context = {
+        'acoes': acoes[:N],
+        'intencoes': intencoes[:N],
+        'historias': historias[:N],
+    }
+    return render(request, "app_chatbot/index.html", context)
 
 def listar_historia(request):
     textos = models.Texto.objects.all()

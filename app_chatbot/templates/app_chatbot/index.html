@@ -31,37 +31,54 @@
 
     </style>
     <div class="container">
-        <div class="main">
-            FLUXO DAS HISTÓRIAS
-        </div>
-        <div class="caixa1">
-            Histórias 
+        <div class="main">FLUXO DAS HISTÓRIAS</div>
+
+        <div class="caixa1">Histórias 
             <a style="float: right"><i class="plus"></i>+</a>
             <br><br>
             <table>
-                <tr><th></th><th></th></tr>
-                <tr><td style="width: 80%">História 1</td><td style="width: 20%">editar</td></tr>
-                <tr><td style="width: 80%">História 2</td><td style="width: 20%">editar</td></tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for h in historias %}
+                <tr>
+                    <td style="width: 80%">{{ h }}</td>
+                    <td style="width: 20%">editar</td>
+                </tr>
+                {% endfor %}
             </table>    
         </div>
-        <div class="caixa2">
-            Ações
+        <div class="caixa2">Ações
             <a style="float: right"><i class="plus"></i>+</a>
             <br><br>
             <table>
-                <tr><th></th><th></th></tr>
-                <tr><td style="width: 80%">Ação 1</td><td style="width: 20%">editar</td></tr>
-                <tr><td style="width: 80%">Ação 2</td><td style="width: 20%">editar</td></tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for a in acoes %}
+                <tr>
+                    <td style="width: 80%">{{ a }}</td>
+                    <td style="width: 20%">editar</td>
+                </tr>
+            {% endfor %}
             </table> 
         </div>
-        <div class="caixa3">
-            Intenções
+        <div class="caixa3">Intenções
             <a style="float: right"><i class="plus"></i>+</a>
             <br><br>
             <table>
-                <tr><th></th><th></th></tr>
-                <tr><td style="width: 80%">Intenção 1</td><td style="width: 20%">editar</td></tr>
-                <tr><td style="width: 80%">Intenção 2</td><td style="width: 20%">editar</td></tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for i in intencoes %}
+                <tr>
+                    <td style="width: 80%">{{ i }}</td>
+                    <td style="width: 20%">editar</td>
+                </tr>
+            {% endfor %}
             </table> 
         </div>
     </div>
