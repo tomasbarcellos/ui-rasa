@@ -5,6 +5,9 @@ from django.forms.models import modelformset_factory
 
 from . import forms, models
 
+def index(request):
+    return render(request, "app_chatbot/index.html", {})
+
 def listar_historia(request):
     textos = models.Texto.objects.all()
     return render(request, 'app_chatbot/historia.html', {'textos': textos})

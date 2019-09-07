@@ -1,0 +1,68 @@
+<html>
+    <style>
+        div {
+            border:black solid 1px;
+        }
+
+        div.container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            grid-template-rows: 150px 150px 150px;
+            grid-template-areas: 
+              "main caixa1"
+              "main caixa2"
+              "main caixa3";
+        }
+        .main {
+            grid-area: main;
+        }
+
+        .caixa1 {
+            grid-area: caixa1;
+        }
+
+        .caixa2 {
+            grid-area: caixa2;
+        }
+
+        .caixa3 {
+            grid-area: caixa3;
+        }
+
+    </style>
+    <div class="container">
+        <div class="main">
+            FLUXO DAS HISTÓRIAS
+        </div>
+        <div class="caixa1">
+            Histórias 
+            <a style="float: right"><i class="plus"></i>+</a>
+            <br><br>
+            <table>
+                <tr><th></th><th></th></tr>
+                <tr><td style="width: 80%">História 1</td><td style="width: 20%">editar</td></tr>
+                <tr><td style="width: 80%">História 2</td><td style="width: 20%">editar</td></tr>
+            </table>    
+        </div>
+        <div class="caixa2">
+            Ações
+            <a style="float: right"><i class="plus"></i>+</a>
+            <br><br>
+            <table>
+                <tr><th></th><th></th></tr>
+                <tr><td style="width: 80%">Ação 1</td><td style="width: 20%">editar</td></tr>
+                <tr><td style="width: 80%">Ação 2</td><td style="width: 20%">editar</td></tr>
+            </table> 
+        </div>
+        <div class="caixa3">
+            Intenções
+            <a style="float: right"><i class="plus"></i>+</a>
+            <br><br>
+            <table>
+                <tr><th></th><th></th></tr>
+                <tr><td style="width: 80%">Intenção 1</td><td style="width: 20%">editar</td></tr>
+                <tr><td style="width: 80%">Intenção 2</td><td style="width: 20%">editar</td></tr>
+            </table> 
+        </div>
+    </div>
+</html>
