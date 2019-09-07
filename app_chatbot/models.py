@@ -22,8 +22,8 @@ class Historia(models.Model):
         return self.nome
 
 class PartesHistoria(models.Model):
-    historia = models.ForeignKey(Historia, on_delete = models.CASCADE)
-    ordem = models.PositiveSmallIntegerField("ordem do elemento na história")
+    historia = models.ForeignKey(Historia, blank=True, on_delete = models.CASCADE)
+    ordem = models.PositiveSmallIntegerField("ordem do elemento na história", blank=True)
     componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
 
     def __str__(self):

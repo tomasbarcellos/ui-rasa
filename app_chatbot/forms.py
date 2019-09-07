@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import AcaoIntencao, Texto, Historia
+from .models import AcaoIntencao, Texto, Historia, PartesHistoria
 
 class HistoriaForm(forms.ModelForm):
 
@@ -13,6 +13,28 @@ class HistoriaForm(forms.ModelForm):
         widgets = {
             "nome": forms.TextInput(
                 attrs={"class": "form-control",},
+            ),
+        }
+
+class PartesHistoriaForm(forms.ModelForm):
+
+    class Meta:
+        model = PartesHistoria
+        fields = ('historia', 'ordem', 'componente',)
+        labels = {
+            "historia": "",
+            "ordem": "",
+            "componente":"",
+        }   
+        widgets = {
+            "historia": forms.Select(
+                attrs={"class": "selectpicker form-control", "style": "display:none"}
+            ),
+            "ordem": forms.NumberInput(
+                attrs={"class": "form-control", "style": "display:none"}
+            ),
+            "componente": forms.Select(
+                attrs={"class": "selectpicker form-control",},
             ),
         }
 
