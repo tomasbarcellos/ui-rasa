@@ -4,7 +4,7 @@
             border:black solid 1px;
         }
 
-        div.container {
+        .container {
             display: grid;
             grid-template-columns: 3fr 1fr;
             grid-template-rows: 150px 150px 150px;
@@ -13,6 +13,12 @@
               "main caixa2"
               "main caixa3";
         }
+
+        a {
+            margin-block-start: 1.33em;
+            margin-block-end: 1.33em;
+        }
+
         .main {
             grid-area: main;
         }
@@ -33,8 +39,9 @@
     <div class="container">
         <div class="main">FLUXO DAS HISTÓRIAS</div>
 
-        <div class="caixa1">Histórias 
-            <a style="float: right"><i class="plus"></i>+</a>
+        <div class="caixa1">
+            <h4 style="float:left">Histórias</h4>
+            <a style="float: right" href="{% url 'criar_historia' %}"><i class="plus"></i>+</a>
             <br><br>
             <table>
                 <tr>
@@ -44,13 +51,14 @@
                 {% for h in historias %}
                 <tr>
                     <td style="width: 80%">{{ h }}</td>
-                    <td style="width: 20%">editar</td>
+                    <td style="width: 20%"><a href = "{% url 'editar_historia' id=h.pk %}">editar</a></td>
                 </tr>
                 {% endfor %}
             </table>    
         </div>
-        <div class="caixa2">Ações
-            <a style="float: right"><i class="plus"></i>+</a>
+        <div class="caixa2">
+            <h4 style="float:left">Ações</h4>
+            <a style="float: right" href="{% url 'criar_acao_intencao' tipo='acao' %}"><i class="plus"></i>+</a>
             <br><br>
             <table>
                 <tr>
@@ -60,13 +68,14 @@
                 {% for a in acoes %}
                 <tr>
                     <td style="width: 80%">{{ a }}</td>
-                    <td style="width: 20%">editar</td>
+                    <td style="width: 20%"><a href = "{% url 'editar_acao_intencao' tipo='acao' id=a.pk %}">editar</a></td>
                 </tr>
             {% endfor %}
             </table> 
         </div>
-        <div class="caixa3">Intenções
-            <a style="float: right"><i class="plus"></i>+</a>
+        <div class="caixa3">
+            <h4 style="float:left">Intenções</h4>
+            <a style="float: right" href="{% url 'criar_acao_intencao' tipo='intencao' %}"><i class="plus"></i>+</a>
             <br><br>
             <table>
                 <tr>
@@ -76,7 +85,7 @@
                 {% for i in intencoes %}
                 <tr>
                     <td style="width: 80%">{{ i }}</td>
-                    <td style="width: 20%">editar</td>
+                    <td style="width: 20%"><a href = "{% url 'editar_acao_intencao' tipo='intencao' id=i.pk %}">editar</a></td>
                 </tr>
             {% endfor %}
             </table> 

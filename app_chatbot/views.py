@@ -35,6 +35,9 @@ def criar_historia(request):
     context = {"form": form, }
     return render(request, 'app_chatbot/criar_historia.html', context)
 
+def editar_historia(request, id):
+    return render(request, 'app_chatbot/index.html', {'id': id})
+
 def criar_acao_intencao(request, tipo):
     N_EXTRA = 10
     TextoFormset = modelformset_factory(
@@ -64,6 +67,10 @@ def criar_acao_intencao(request, tipo):
     }
     return render(request, 'app_chatbot/criar_acao_intencao.html', context)
 
+def editar_acao_intencao(request, tipo, id):
+    return render(request, 'app_chatbot/index.html', {'tipo': tipo, 'id': id})
+
+    
 # 2. Criar view em que há uma lista de todas as intenções
 # deve listar os X primeiros (uma uma amostra de tamanho X) exemplos
 def listar_acoesintencoes(request, tipo):
