@@ -131,7 +131,7 @@ def listar_acoesintencoes(request, tipo):
     }
     return render(request, 'app_chatbot/listar_acoesintencoes.html', context)
 
-def escrever_intencoes():
+def escrever_intencoes(caminho):
     intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
 
     intents = ""
@@ -142,10 +142,10 @@ def escrever_intencoes():
             intents += f"- {t}\n"
         intents += "\n"
 
-    with open("intents.md", "w") as file:
+    with open(caminho, "w") as file:
         file.write(intents) 
 
-def escrever_domain():
+def escrever_domain(caminho):
     acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
     intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
 
@@ -171,10 +171,10 @@ def escrever_domain():
     for a in acoes:
         domain += f"  - {a}\n"
 
-    with open("domain.yml", "w") as file:
+    with open(caminho, "w") as file:
         file.write(domain) 
 
-def escrever_historias():
+def escrever_historias(caminho):
     historias = models.Historia.objects.all()
     stories = ""
     for h in historias:
@@ -187,12 +187,15 @@ def escrever_historias():
                 stories += f"    - {p.componente}\n"
         stories += "\n"
 
-    with open("stories.md", "w") as file:
+    with open(caminho, "w") as file:
         file.write(stories) 
 
 def escrever_md(request):
-    escrever_intencoes()
-    escrever_domain()
-    escrever_historias()
+    escrever_intencoes("intents.md")
+    escrever_domain("domain.yml")
+    escrever_historias("stories.md")
 
     return render(request, "app_chatbot/escrever_md.html", None)
+
+
+
