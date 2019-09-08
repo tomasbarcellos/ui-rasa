@@ -43,30 +43,32 @@
             {% endfor %}
 
             {{ formset.management_form }} 
-            {% for form in formset %} 
+            {% for f in formset %} 
                 {% csrf_token %}
-                <div> {{form}} <br> </div>
+                {{ f }} <br>
             {% endfor %}
             <input type="submit" name="submit-intencao" value="Criar história" class="btn btn-success">
             <a class="btn btn-danger" href="{% url 'index' %}">Cancelar</a>
         </form> <br>
     </div>
     <div class="caixa1">
-        {{ acoes }}
+        <h4>Ações</h4>
         <ul>
             {% for a in acoes %}
-            <li class="form-group">
-                {{ a }}
-            </li>
+                <li class="form-group">
+                    {{ a.id_acao_intencao }}
+                    <ul><li>{{ a }}</li></ul>
+                </li>
             {% endfor %}
         </ul>
     </div>
     <div class="caixa2">
-        {{ intencoes }}
+        <h4>Intenções</h4>
         <ul>
             {% for i in intencoes %}
             <li class="form-group">
-                {{ i }}
+                {{ i.id_acao_intencao }}
+                <ul><li>{{ i }}</li></ul>
             </li>
             {% endfor %}
         </ul>

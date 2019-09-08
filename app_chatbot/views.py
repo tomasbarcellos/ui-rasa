@@ -24,7 +24,7 @@ def listar_historia(request):
     return render(request, 'app_chatbot/historia.html', {'textos': textos})
 
 def criar_historia(request):
-    N = 2
+    N = 15
     N_EXTRA = 10
     
     PartesFormset = modelformset_factory(
@@ -32,8 +32,23 @@ def criar_historia(request):
     )
     queryset = models.Historia.objects.none()
     
-    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
-    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+    acoes = models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Ação")
+    ids_acoes = set()
+    for x in acoes:
+        id_ai = x.id_acao_intencao.pk
+        if id_ai not in ids_acoes:
+            ids_acoes.add(id_ai)
+        else:
+            acoes = acoes.exclude(pk = x.pk)
+
+    intencoes = models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Intenção")
+    ids_intencoes = set()
+    for x in intencoes:
+        id_ai = x.id_acao_intencao.pk
+        if id_ai not in ids_intencoes:
+            ids_intencoes.add(id_ai)
+        else:
+            intencoes = intencoes.exclude(pk = x.pk)
     
     form = forms.HistoriaForm(request.POST or None)
     formset = PartesFormset(request.POST or None, queryset=queryset)
@@ -85,7 +100,7 @@ def criar_acao_intencao(request, tipo):
         for insta in instances:
             insta.id_acao_intencao_id = saved_id
             insta.save()
-        return redirect(reverse("criar_acao_intencao", kwargs={"tipo": tipo}))
+        return redirect(reverse("index"))
     context = {
         "form": form,
         "formset": formset,
