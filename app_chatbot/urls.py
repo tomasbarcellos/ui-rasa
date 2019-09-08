@@ -9,4 +9,5 @@ urlpatterns = [
     re_path(r'^criar/(?P<tipo>(acao|intencao))$', views.criar_acao_intencao, name='criar_acao_intencao'),
     re_path(r'^listar/(?P<tipo>(acao|intencao))$', views.listar_acoesintencoes, name='listar_acoes'),
     re_path(r'^editar/(?P<tipo>(acao|intencao))/(?P<id>\d+)$', views.editar_acao_intencao, name='editar_acao_intencao'),
+    path('preparar/bot', views.escrever_md, name = 'escrever_md'),
 ]

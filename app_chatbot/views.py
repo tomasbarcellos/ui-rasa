@@ -17,6 +17,7 @@ def index(request):
         'intencoes': intencoes[:N],
         'historias': historias[:N],
     }
+
     return render(request, "app_chatbot/index.html", context)
 
 def listar_historia(request):
@@ -130,3 +131,68 @@ def listar_acoesintencoes(request, tipo):
     }
     return render(request, 'app_chatbot/listar_acoesintencoes.html', context)
 
+def escrever_intencoes():
+    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+
+    intents = ""
+    for i in intencoes:
+        intents += f"## intent:{i}\n"
+        textos_intentencoes = models.Texto.objects.filter(id_acao_intencao = i.pk)
+        for t in textos_intentencoes:
+            intents += f"- {t}\n"
+        intents += "\n"
+
+    with open("intents.md", "w") as file:
+        file.write(intents) 
+
+def escrever_domain():
+    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
+    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+
+    domain = "intents:\n"
+    for i in intencoes:
+        domain += f"  - {i}\n"
+    domain += "\n"
+
+    entidades = ["afazer"]
+    domain += "entities:\n"
+    for e in entidades:
+        domain += f"  - {e}\n"
+    domain += "\n"
+
+    domain += "templates:\n"
+    for a in acoes:
+        domain += f"  {a}:\n"
+        textos_acoes = models.Texto.objects.filter(id_acao_intencao = a.pk)
+        for t in textos_acoes:
+            domain += f"    - text : |\n       {t}\n\n"
+
+    domain += "actions:\n"
+    for a in acoes:
+        domain += f"  - {a}\n"
+
+    with open("domain.yml", "w") as file:
+        file.write(domain) 
+
+def escrever_historias():
+    historias = models.Historia.objects.all()
+    stories = ""
+    for h in historias:
+        stories += f"## {h}\n"
+        partes = models.PartesHistoria.objects.filter(historia = h.pk)
+        for p in partes:
+            if p.componente.tipo == "Intenção":
+                stories += f"* {p.componente}\n"
+            else :
+                stories += f"    - {p.componente}\n"
+        stories += "\n"
+
+    with open("stories.md", "w") as file:
+        file.write(stories) 
+
+def escrever_md(request):
+    escrever_intencoes()
+    escrever_domain()
+    escrever_historias()
+
+    return render(request, "app_chatbot/escrever_md.html", None)
