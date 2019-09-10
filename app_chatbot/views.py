@@ -33,23 +33,23 @@ def criar_historia(request):
     )
     queryset = models.Historia.objects.none()
     
-    acoes = models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Ação")
-    ids_acoes = set()
-    for x in acoes:
-        id_ai = x.id_acao_intencao.pk
-        if id_ai not in ids_acoes:
-            ids_acoes.add(id_ai)
-        else:
-            acoes = acoes.exclude(pk = x.pk)
+    def primeiros(objeto):
+        ids = set()
+        for x in objeto:
+            id_ai = x.id_acao_intencao.pk
+            if id_ai not in ids:
+                ids.add(id_ai)
+            else:
+                objeto = objeto.exclude(pk = x.pk)    
+        return objeto
 
-    intencoes = models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Intenção")
-    ids_intencoes = set()
-    for x in intencoes:
-        id_ai = x.id_acao_intencao.pk
-        if id_ai not in ids_intencoes:
-            ids_intencoes.add(id_ai)
-        else:
-            intencoes = intencoes.exclude(pk = x.pk)
+    acoes = primeiros(
+        models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Ação")
+    )
+
+    intencoes = primeiros(
+        models.Texto.objects.filter(id_acao_intencao__tipo__contains = "Intenção")
+    )
     
     form = forms.HistoriaForm(request.POST or None)
     formset = PartesFormset(request.POST or None, queryset=queryset)
@@ -146,30 +146,26 @@ def escrever_intencoes(caminho):
         file.write(intents) 
 
 def escrever_domain(caminho):
-    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
-    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
-
+    def juntar(vetor, f_ish_string):
+        string = ""
+        for elem in vetor:
+            string += f_ish_string.format(elem = elem)
+        return string + "\n"
+    
     domain = "intents:\n"
-    for i in intencoes:
-        domain += f"  - {i}\n"
-    domain += "\n"
+    intencoes = models.AcaoIntencao.objects.filter(tipo = "Intenção")
+    domain += juntar(intencoes, "  - {elem}\n")
 
-    entidades = ["afazer"]
-    domain += "entities:\n"
-    for e in entidades:
-        domain += f"  - {e}\n"
-    domain += "\n"
-
+    domain += "actions:\n"
+    acoes = models.AcaoIntencao.objects.filter(tipo = "Ação")
+    domain += juntar(acoes, "  - {elem}\n")
+    
     domain += "templates:\n"
     for a in acoes:
         domain += f"  {a}:\n"
         textos_acoes = models.Texto.objects.filter(id_acao_intencao = a.pk)
         for t in textos_acoes:
             domain += f"    - text : |\n       {t}\n\n"
-
-    domain += "actions:\n"
-    for a in acoes:
-        domain += f"  - {a}\n"
 
     with open(caminho, "w") as file:
         file.write(domain) 

@@ -1,8 +1,8 @@
 from django.db import models
 
-# historias > intenções + ações
-# intenções > textos
-# ações > textos
+# historias > partes
+# partes = intenções | ações
+# intenções | ações > textos
 
 class AcaoIntencao(models.Model):
     TIPO_CHOICE = (
@@ -27,7 +27,7 @@ class PartesHistoria(models.Model):
     componente = models.ForeignKey(AcaoIntencao, on_delete = models.PROTECT)
 
     def __str__(self):
-        return str(self.ordem) + ": " + str(self.componente)
+        return str(self.historia) + ": " + str(self.ordem) + " - " + str(self.componente)
 
 class Texto(models.Model):
     id_acao_intencao = models.ForeignKey(AcaoIntencao, blank=True, on_delete = models.CASCADE)
